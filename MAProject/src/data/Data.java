@@ -4,7 +4,7 @@ import java.util.Random;
 import utility.ArraySet;
 
 public class Data {
-
+//
 	private Object data [][]; // una matrice nXm di tipo Object dove ogni riga modella una transazioni
 	private int numberOfExamples; // cardinalit‡ dellíinsieme di transazioni (numero di righe in data)
 	private Attribute explanatorySet[]; // un vettore degli attributi in ciascuna tupla (schema della tabella di dati)
@@ -191,8 +191,11 @@ public class Data {
 		return tuple;
 	}
 
-	public int[] sampling(int k)
+	public int[] sampling(int k)throws OutOfRangeSampleSize
 	{
+		if(k<=0 || k>distinctTuples) {
+			throw new OutOfRangeSampleSize("\nNumero di cluser non valido\n");
+		}
 		int centroidIndexes[] = new int[k];
 		//choose k random different centroids in data.
 		Random rand = new Random();
