@@ -1,4 +1,8 @@
+
 package data;
+
+import java.util.*;
+
 public class Tuple {
 	
 	private Item[] tuple;
@@ -39,16 +43,17 @@ public class Tuple {
 		return distanza;
 	}
 
-	public double avgDistance(Data data, int clusteredData[])
+	public double avgDistance(Data data, HashSet<Integer> clusteredData)
 	{
 		 double p = 0.0;
 		 double sumD = 0.0;
-		 for(int i=0; i < clusteredData.length; i++)
+		 Iterator<Integer> itr = clusteredData.iterator();
+		 for(int i=0; i < clusteredData.size(); i++)
 		 {
-			 double d = getDistance(data.getItemSet(clusteredData[i]));
+			 double d = getDistance(data.getItemSet(itr.next()));
 			 sumD = sumD + d;
 		 }
-		 p = sumD / clusteredData.length; // media della somma delle distanza
+		 p = sumD / clusteredData.size(); // media della somma delle distanza
 		 
 		 return p;
 	}

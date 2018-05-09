@@ -1,3 +1,10 @@
+//********************************************************************
+//  Keyboard.java       Author: Lewis and Loftus
+//
+//  Facilitates keyboard input by abstracting details about input
+//  parsing, conversions, and exception handling.
+//********************************************************************
+
 package keyboardinput;
 
 import java.io.*;
@@ -14,7 +21,8 @@ public class Keyboard {
 	// Returns the current error count.
 	// -----------------------------------------------------------------
 
-	public static int getErrorCount() {
+	public static int getErrorCount() 
+	{
 		return errorCount;
 	}
 
@@ -22,7 +30,8 @@ public class Keyboard {
 	// Resets the current error count to zero.
 	// -----------------------------------------------------------------
 
-	public static void resetErrorCount(int count) {
+	public static void resetErrorCount(int count) 
+	{
 		errorCount = 0;
 	}
 
@@ -30,7 +39,8 @@ public class Keyboard {
 	// Returns a boolean indicating whether input errors are
 	// currently printed to standard output.
 	// -----------------------------------------------------------------
-	public static boolean getPrintErrors() {
+	public static boolean getPrintErrors() 
+	{
 		return printErrors;
 	}
 
@@ -38,7 +48,8 @@ public class Keyboard {
 	// Sets a boolean indicating whether input errors are to be
 	// printed to standard output.
 	// -----------------------------------------------------------------
-	public static void setPrintErrors(boolean flag) {
+	public static void setPrintErrors(boolean flag) 
+	{
 		printErrors = flag;
 	}
 
@@ -46,7 +57,8 @@ public class Keyboard {
 	// Increments the error count and prints the error message if
 	// appropriate.
 	// -----------------------------------------------------------------
-	private static void error(String str) {
+	private static void error(String str) 
+	{
 		errorCount++;
 		if (printErrors)
 			System.out.println(str);
@@ -65,19 +77,22 @@ public class Keyboard {
 	// Gets the next input token assuming it may be on subsequent
 	// input lines.
 	// -----------------------------------------------------------------
-	private static String getNextToken() {
+	private static String getNextToken() 
+	{
 		return getNextToken(true);
 	}
 
 	// -----------------------------------------------------------------
 	// Gets the next input token, which may already have been read.
 	// -----------------------------------------------------------------
-	private static String getNextToken(boolean skip) {
+	private static String getNextToken(boolean skip) 
+	{
 		String token;
 
 		if (current_token == null)
 			token = getNextInputToken(skip);
-		else {
+		else 
+		{
 			token = current_token;
 			current_token = null;
 		}
@@ -90,22 +105,27 @@ public class Keyboard {
 	// current input line or a subsequent one. The parameter
 	// determines if subsequent lines are used.
 	// -----------------------------------------------------------------
-	private static String getNextInputToken(boolean skip) {
+	private static String getNextInputToken(boolean skip) 
+	{
 		final String delimiters = " \t\n\r\f";
 		String token = null;
 
-		try {
+		try 
+		{
 			if (reader == null)
 				reader = new StringTokenizer(in.readLine(), delimiters, true);
 
-			while (token == null || ((delimiters.indexOf(token) >= 0) && skip)) {
+			while (token == null || ((delimiters.indexOf(token) >= 0) && skip)) 
+			{
 				while (!reader.hasMoreTokens())
 					reader = new StringTokenizer(in.readLine(), delimiters,
 							true);
 
 				token = reader.nextToken();
 			}
-		} catch (Exception exception) {
+		} 
+		catch (Exception exception) 
+		{
 			token = null;
 		}
 
@@ -116,7 +136,8 @@ public class Keyboard {
 	// Returns true if there are no more tokens to read on the
 	// current input line.
 	// -----------------------------------------------------------------
-	public static boolean endOfLine() {
+	public static boolean endOfLine() 
+	{
 		return !reader.hasMoreTokens();
 	}
 
@@ -125,15 +146,20 @@ public class Keyboard {
 	// -----------------------------------------------------------------
 	// Returns a string read from standard input.
 	// -----------------------------------------------------------------
-	public static String readString() {
+	public static String readString() 
+	{
 		String str;
 
-		try {
+		try 
+		{
 			str = getNextToken(false);
-			while (!endOfLine()) {
+			while (!endOfLine()) 
+			{
 				str = str + getNextToken(false);
 			}
-		} catch (Exception exception) {
+		} 
+		catch (Exception exception) 
+		{
 			error("Error reading String data, null value returned.");
 			str = null;
 		}
@@ -144,52 +170,72 @@ public class Keyboard {
 	// Returns a space-delimited substring (a word) read from
 	// standard input.
 	// -----------------------------------------------------------------
-	public static String readWord() {
+	public static String readWord() 
+	{
 		String token;
-		try {
+		
+		try 
+		{
 			token = getNextToken();
-		} catch (Exception exception) {
+		} 
+		catch (Exception exception) 
+		{
 			error("Error reading String data, null value returned.");
 			token = null;
 		}
+		
 		return token;
 	}
 
 	// -----------------------------------------------------------------
 	// Returns a boolean read from standard input.
 	// -----------------------------------------------------------------
-	public static boolean readBoolean() {
+	public static boolean readBoolean() 
+	{
 		String token = getNextToken();
 		boolean bool;
-		try {
+		
+		try 
+		{
 			if (token.toLowerCase().equals("true"))
 				bool = true;
 			else if (token.toLowerCase().equals("false"))
 				bool = false;
-			else {
+			else 
+			{
 				error("Error reading boolean data, false value returned.");
 				bool = false;
 			}
-		} catch (Exception exception) {
+		} 
+		catch (Exception exception) 
+		{
 			error("Error reading boolean data, false value returned.");
 			bool = false;
 		}
+		
 		return bool;
 	}
 
 	// -----------------------------------------------------------------
 	// Returns a character read from standard input.
 	// -----------------------------------------------------------------
-	public static char readChar() {
+	public static char readChar() 
+	{
 		String token = getNextToken(false);
 		char value;
-		try {
-			if (token.length() > 1) {
+		
+		try 
+		{
+			if (token.length() > 1) 
+			{
 				current_token = token.substring(1, token.length());
-			} else
+			} 
+			else
 				current_token = null;
 			value = token.charAt(0);
-		} catch (Exception exception) {
+		} 
+		catch (Exception exception) 
+		{
 			error("Error reading char data, MIN_VALUE value returned.");
 			value = Character.MIN_VALUE;
 		}
@@ -200,61 +246,84 @@ public class Keyboard {
 	// -----------------------------------------------------------------
 	// Returns an integer read from standard input.
 	// -----------------------------------------------------------------
-	public static int readInt() {
+	public static int readInt() 
+	{
 		String token = getNextToken();
 		int value;
-		try {
+		
+		try 
+		{
 			value = Integer.parseInt(token);
-		} catch (Exception exception) {
+		} 
+		catch (Exception exception) 
+		{
 			error("Error reading int data, MIN_VALUE value returned.");
 			value = Integer.MIN_VALUE;
 		}
+		
 		return value;
 	}
 
 	// -----------------------------------------------------------------
 	// Returns a long integer read from standard input.
 	// -----------------------------------------------------------------
-	public static long readLong() {
+	public static long readLong() 
+	{
 		String token = getNextToken();
 		long value;
-		try {
+		
+		try 
+		{
 			value = Long.parseLong(token);
-		} catch (Exception exception) {
+		} 
+		catch (Exception exception) 
+		{
 			error("Error reading long data, MIN_VALUE value returned.");
 			value = Long.MIN_VALUE;
 		}
+		
 		return value;
 	}
 
 	// -----------------------------------------------------------------
 	// Returns a float read from standard input.
 	// -----------------------------------------------------------------
-	public static float readFloat() {
+	public static float readFloat() 
+	{
 		String token = getNextToken();
 		float value;
-		try {
-			value = (new Float(token)).floatValue(); //LEGACY
-		} catch (Exception exception) {
+		
+		try 
+		{
+			value = (new Float(token)).floatValue();
+		} 
+		catch (Exception exception) 
+		{
 			error("Error reading float data, NaN value returned.");
 			value = Float.NaN;
 		}
+		
 		return value;
 	}
 
 	// -----------------------------------------------------------------
 	// Returns a double read from standard input.
 	// -----------------------------------------------------------------
-	public static double readDouble() {
+	public static double readDouble() 
+	{
 		String token = getNextToken();
 		double value;
-		try {
+		
+		try 
+		{
 			value = (new Double(token)).doubleValue();
-		} catch (Exception exception) {
+		} 
+		catch (Exception exception) 
+		{
 			error("Error reading double data, NaN value returned.");
 			value = Double.NaN;
 		}
+		
 		return value;
 	}
 }
-

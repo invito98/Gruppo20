@@ -1,23 +1,24 @@
+
 package mining;
-import data.Data;
-import data.Tuple;
-import utility.ArraySet;
+
+import java.util.*;
+import data.*;
 
 public class Cluster {
 	
 	private Tuple centroid; // vettore di item, contenenti un Attribute e un oggetto
-	private ArraySet clusteredData; // vettore inizialmente di booleani
+	private HashSet<Integer> clusteredData; // vettore inizialmente di booleani
 
 	Cluster() // costruttore con valori casuali
 	{
 		centroid = new Tuple(5); 
-		clusteredData = new ArraySet();
+		clusteredData = new HashSet<Integer>();
 	}
 
 	Cluster(Tuple centroid)
 	{
 		this.centroid = centroid;
-		clusteredData = new ArraySet();
+		clusteredData = new HashSet<Integer>();
 	}
 
 	Tuple getCentroid()
@@ -29,7 +30,7 @@ public class Cluster {
 	{
 		for (int i = 0; i < centroid.getLength(); i++)
 		{
-			centroid.get(i).update(data,clusteredData);
+			centroid.get(i).update(data, clusteredData);
 		}
 
 	}
@@ -40,16 +41,36 @@ public class Cluster {
 		return clusteredData.add(id);
 	}
 
-	//verifica se una transazione Ã€ clusterizzata nell'array corrente
+	//verifica se una transazione Ë clusterizzata nell'array corrente
 	boolean contain(int id)
 	{
-		return clusteredData.get(id);
+		Iterator<Integer> itr = clusteredData.iterator();
+		
+		while (itr.hasNext())
+		{
+			if (itr.next() == id)
+			{
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	//remove the tuple that has changed the cluster
 	void removeTuple(int id)
-	{
-		clusteredData.delete(id);
+	{ 
+		Iterator<Integer> itr = clusteredData.iterator();
+		
+		while (itr.hasNext())
+		{
+			if (itr.next() == id)
+			{
+				clusteredData.remove((Integer)id);
+				return;
+			}
+		}
+		
 	}
 
 	public String toString()
@@ -70,19 +91,20 @@ public class Cluster {
 		
 		for(int i = 0; i < centroid.getLength(); i++)
 			str += centroid.get(i) + " ";
-		str += ")\n Examples:\n";
+		str += ")\nExamples:\n";
 		
-		int array[] = clusteredData.toArray(); // array di booleani in array di indici delle righe vere
-		for (int i=0; i < array.length; i++)
+		Iterator<Integer> itr = clusteredData.iterator();
+		for (int i = 0; i < clusteredData.size(); i++)
 		{
-			str += "[";
+			int riga = itr.next();
+			str += "[ ";
 			for (int j = 0; j < data.getNumberOfExplanatoryAttributes(); j++)
 			{
-				str += data.getAttributeValue(array[i], j) + " ";
+				str += data.getAttributeValue(riga, j) + " ";
 			}
-			str += "] dist=" + getCentroid().getDistance(data.getItemSet(array[i])) + "\n";
+			str += "] dist = " + getCentroid().getDistance(data.getItemSet(riga)) + "\n";
 		}
-		str += "\n AvgDistance="+getCentroid().avgDistance(data, array);
+		str += "\n AvgDistance ="+ getCentroid().avgDistance(data, clusteredData) + "\n";
 		
 		return str;
 	}

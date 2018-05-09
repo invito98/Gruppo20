@@ -1,70 +1,77 @@
+
 package data;
 
-import utility.ArraySet;
+import java.util.*;
 
-class DiscreteAttribute extends Attribute {
+class DiscreteAttribute extends Attribute implements Iterable<String> {
 	
-	private String values[];
+	private TreeSet<String> values;
 	
-	DiscreteAttribute (String name, int index, String values[])
+	DiscreteAttribute(String name, int index, TreeSet<String> values)
 	{
 		super (name, index); // invoca il costruttore della classe madre
 		this.values = values;
 	}
 	
-	int getNumberOfDistinctValues()
+	public Iterator<String> iterator()
 	{
-		return values.length;
+		Iterator<String> itr = values.iterator(); // mi restituisce l'iteratore all'oggetto voluto, nel caso alla stringa
+		
+		return itr;
 	}
 	
-	String getValue(int i)
+	int getNumberOfDistinctValues()
 	{
-		return values[i];
+		return values.size();
 	}
 
-	int frequency (Data data,ArraySet idList,String v) 
+	int frequency(Data data, HashSet<Integer> idList, String v) 
 	{
-		int i,frequency,index;
-		int vector[] = idList.toArray(); /* converte il vettore di booleani, in uno di interi in cui ogni 
-		                                  * elemento Ë l'indice della riga in cui c'Ë vero
-		                                  */
+		int frequency, index;
 		
-		index = findColumn(data, v); /* trova la colonna in cui si trover‡ nella matrice data la stringa v
+		index = findColumn(data, v); /* trova la colonna in cui si trover� nella matrice data la stringa v
 		                              * servendosi di DiscreteAttribute
 		                              */
-		i = frequency = 0;
-		while (i < vector.length) 
-		{
-			if (v.equals(data.getAttributeValue(vector[i], index))) 
+		frequency = 0;
+		Iterator<Integer> itr = idList.iterator();
+		while (itr.hasNext()) 
+		{	
+			if (v.equals(data.getAttributeValue(itr.next(), index))) 
 			{
 				frequency += 1;
 			}
-			i++;
 		}
 		
 		return frequency;
 	}
 
-	private int findColumn (Data data, String v)
+	private int findColumn(Data data, String v) /* trovare la colonna di Data in cui poter trovare la stringa v
+												  * trovando prima v a che discreteAttribute appartiene
+												  */
 	{
 		int i, j, index;
-		i=0;
+		
+		i = 0;
 		while(i < data.getNumberOfExplanatoryAttributes())
 		{
 			DiscreteAttribute a = (DiscreteAttribute)data.getAttribute(i); // cast di a ad DiscreteAttribute																		
-			j=0;
+			j = 0;
+			Iterator<String> itr = a.iterator();
 			while (j < a.getNumberOfDistinctValues())
 			{
-				if (v == a.getValue(j))
+				if (v == itr.next())
 				{
 					index = i;
 					return index;
 				}
+				
 				j++;
 			}
+			
 			i++;
 		}
 		
 		return -1;
 	}
+	
 }
