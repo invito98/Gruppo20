@@ -1,13 +1,13 @@
 package data;
 
-import utility.ArraySet;
+import java.util.*;
 
 public abstract class Item {
 	
 	private Attribute attribute; // Classe Attribute da ereditare
 	private Object value; // oggetto valore
 
-	public Item(Attribute attributo, Object valore)
+	Item(Attribute attributo, Object valore)
 	{
 		attribute = attributo;
 		value = valore;
@@ -30,9 +30,9 @@ public abstract class Item {
 
 	abstract double distance(Object a); // da implementare per ogni Attribute
 
-	public void update(Data data, ArraySet clusteredData)
+	public void update(Data data, HashSet<Integer> clusteredData)
 	{
-		value = data.computePrototype(clusteredData,attribute);
+		value = data.computePrototype(clusteredData, attribute);
 	}
 
 }
