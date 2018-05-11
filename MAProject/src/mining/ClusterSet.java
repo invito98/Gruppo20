@@ -26,24 +26,24 @@ public class ClusterSet {
 		return C[i];
 	}
 
-	void initializeCentroids(Data data)
+	void initializeCentroids(Data data) throws OutOfRangeSampleSize
 	{
-		try 
-		{
+		//try 
+		//{
 			int centroidIndexes[] = data.sampling(C.length);
 			for (int i = 0; i < centroidIndexes.length; i++)
 			{
 				Tuple centroidI = data.getItemSet(centroidIndexes[i]);
 				add(new Cluster(centroidI));
 			}
-		}
-		catch(OutOfRangeSampleSize e) 
-		{
-			e.printStackTrace();
-		}
+		//}
+		//catch(OutOfRangeSampleSize e) 
+		//{
+		//	e.printStackTrace();
+		//}
 	}
 
-	Cluster nearestCluster(Tuple tuple) // ricerca del cluster con la distanza minore, per questo più vicino
+	Cluster nearestCluster(Tuple tuple) // ricerca del cluster con la distanza minore, per questo piï¿½ vicino
 	{
 		double distanza,best;
 		int k;
@@ -64,7 +64,7 @@ public class ClusterSet {
 			j++;
 		}
 		
-		A=C[k]; // A cluster appena creato, diventa quello più vicino, quindi con distanza minore a quello passato
+		A=C[k]; // A cluster appena creato, diventa quello piï¿½ vicino, quindi con distanza minore a quello passato
 		
 		return A;
 	}
@@ -77,7 +77,7 @@ public class ClusterSet {
 		while (k < i) // cicla per tutta la lunghezza del vettore ClusterSet
 		{
 			if (get(k).contain(id)) /* controlla che in posizione id del Cluster k presente in ClusterSet ci sia Vero
-									 * perché è un vettore di booleani
+									 * perchï¿½ ï¿½ un vettore di booleani
 									 */
 			{
 				return get(k);
