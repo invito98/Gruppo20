@@ -2,6 +2,7 @@
 package mining;
 
 import data.Data;
+import data.OutOfRangeSampleSize;
 
 public class KmeansMiner {
 
@@ -17,7 +18,7 @@ public class KmeansMiner {
 		return C;
 	}
 	
-	public int kmeans(Data data) 
+	public int kmeans(Data data) throws OutOfRangeSampleSize 
 	{
 		int numberOfIterations = 0;
 		//STEP 1
