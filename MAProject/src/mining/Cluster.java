@@ -26,7 +26,7 @@ public class Cluster {
 		return centroid;
 	}
 
-	void computeCentroid(Data data)
+	void computeCentroid(Data data) // scritto da LEI
 	{
 		for (int i = 0; i < centroid.getLength(); i++)
 		{
@@ -41,7 +41,7 @@ public class Cluster {
 		return clusteredData.add(id);
 	}
 
-	//verifica se una transazione Ë clusterizzata nell'array corrente
+	//verifica se una transazione ï¿½ clusterizzata nell'array corrente
 	boolean contain(int id)
 	{
 		Iterator<Integer> itr = clusteredData.iterator();
@@ -72,7 +72,7 @@ public class Cluster {
 		}
 		
 	}
-
+//SCRITTI DA lei 
 	public String toString()
 	{
 		String str = "Centroid = (";
@@ -89,7 +89,7 @@ public class Cluster {
 	{
 		String str = "Centroid = (";
 		
-		for(int i = 0; i < centroid.getLength(); i++)
+		for (int i = 0; i < centroid.getLength(); i++)
 			str += centroid.get(i) + " ";
 		str += ")\nExamples:\n";
 		
@@ -104,7 +104,7 @@ public class Cluster {
 			}
 			str += "] dist = " + getCentroid().getDistance(data.getItemSet(riga)) + "\n";
 		}
-		str += "\n AvgDistance ="+ getCentroid().avgDistance(data, clusteredData) + "\n";
+		str += "\n AvgDistance = "+ getCentroid().avgDistance(data, clusteredData) + "\n";
 		
 		return str;
 	}

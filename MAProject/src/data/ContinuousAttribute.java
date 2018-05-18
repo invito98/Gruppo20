@@ -1,19 +1,24 @@
+
 package data;
+
+import java.util.Iterator;
+
 class ContinuousAttribute extends Attribute {
 	
 	private double max;
 	private double min;
 	
-	ContinuousAttribute (String name, int index, double min, double max)
+	ContinuousAttribute(String name, int index, double minimo, double maximo)
 	{
-		super (name, index); // stiamo invocando il costruttore della classe padre
-		min = 0;
-		max = 100;
+		super(name, index); // stiamo invocando il costruttore della classe padre
+		min = minimo;
+		max = maximo;
 	}
 	
-	double getScaledValue (double v)
+	double getScaledValue(double v)
 	{
-		v = (1 - min) / (max - min);
+		v = (v - min) / (max - min);
+		
 		return v;
 	}
 

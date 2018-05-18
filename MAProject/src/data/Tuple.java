@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Tuple {
 	
-	private Item[] tuple;
+	private Item[] tuple; // detto da 	"LEI" !!!
 
 	public Tuple(int size)
 	{
@@ -34,7 +34,7 @@ public class Tuple {
 
 		i = 0;
 		distanza = 0.0;
-		while(i < this.getLength())
+		while(i < getLength())
 		{
 			distanza = distanza + tuple[i].distance(obj.get(i).getValue()); // serve a stabilire quanti valori si differenziano di una stessa tupla, per poi farne la media
 			i++;

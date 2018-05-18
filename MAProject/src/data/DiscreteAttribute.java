@@ -29,7 +29,7 @@ class DiscreteAttribute extends Attribute implements Iterable<String> {
 	{
 		int frequency, index;
 		
-		index = findColumn(data, v); /* trova la colonna in cui si troverà nella matrice data la stringa v
+		index = findColumn(data, v); /* trova la colonna in cui si troverï¿½ nella matrice data la stringa v
 		                              * servendosi di DiscreteAttribute
 		                              */
 		frequency = 0;
@@ -46,26 +46,28 @@ class DiscreteAttribute extends Attribute implements Iterable<String> {
 	}
 
 	private int findColumn(Data data, String v) /* trovare la colonna di Data in cui poter trovare la stringa v
-												  * trovando prima v a che discreteAttribute appartiene
-												  */
+												 * trovando prima v a che discreteAttribute appartiene */						 
 	{
-		int i, j, index;
+		int i, index;
 		
 		i = 0;
-		while(i < data.getNumberOfExplanatoryAttributes())
+		Iterator<Attribute> colonna = data.getAttributeSchema().iterator();
+		while(colonna.hasNext())
 		{
-			DiscreteAttribute a = (DiscreteAttribute)data.getAttribute(i); // cast di a ad DiscreteAttribute																		
-			j = 0;
-			Iterator<String> itr = a.iterator();
-			while (j < a.getNumberOfDistinctValues())
+			Attribute temp = colonna.next();
+			if(temp.getClass().getSimpleName().equals("DiscreteAttribute")) 
 			{
-				if (v == itr.next())
+				DiscreteAttribute temp1 = (DiscreteAttribute)temp;
+				Iterator<String> itr = temp1.iterator();
+				while (itr.hasNext())
 				{
-					index = i;
-					return index;
+					if (v.equals(itr.next()))
+					{
+						index = i;
+						return index;
+					}
+								
 				}
-				
-				j++;
 			}
 			
 			i++;

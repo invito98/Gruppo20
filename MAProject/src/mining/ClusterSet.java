@@ -28,19 +28,14 @@ public class ClusterSet {
 
 	void initializeCentroids(Data data) throws OutOfRangeSampleSize
 	{
-		//try 
-		//{
+		
 			int centroidIndexes[] = data.sampling(C.length);
 			for (int i = 0; i < centroidIndexes.length; i++)
 			{
 				Tuple centroidI = data.getItemSet(centroidIndexes[i]);
 				add(new Cluster(centroidI));
 			}
-		//}
-		//catch(OutOfRangeSampleSize e) 
-		//{
-		//	e.printStackTrace();
-		//}
+		
 	}
 
 	Cluster nearestCluster(Tuple tuple) // ricerca del cluster con la distanza minore, per questo pi� vicino
@@ -116,7 +111,7 @@ public class ClusterSet {
 		return str;
 	}
 	
-	public String toString(Data data )
+	public String toString(Data data)
 	{
 		String str = " ";
 		for (int i = 0; i < C.length; i++)
