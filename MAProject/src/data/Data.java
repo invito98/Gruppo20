@@ -1,7 +1,6 @@
 
 package data;
 
-import java.util.Random;
 import java.util.*;
 
 public class Data {
@@ -10,14 +9,9 @@ public class Data {
 	private int numberOfExamples; // cardinalità dell’insieme di transazioni (numero di righe in data)
 	private List<Attribute> explanatorySet; // lista degli attributi in ciascuna tupla (schema della tabella di dati)
 	
-	public class Example implements Comparable<Example> {
+	class Example implements Comparable<Example> {
 		
-		List<Object> example; // ogni example è una lista di Object
-		
-		Example()
-		{
-			example = new ArrayList<Object>();
-		}
+		private List<Object> example = new ArrayList<Object>(); // ogni example è una lista di Object
 		
 		void add(Object o)
 		{
@@ -29,19 +23,28 @@ public class Data {
 			return example.get(i);
 		}
 		
-		public int compareTo(Example ex)
+		public Iterator<Object> iterator()
 		{
-			int i; 
+			Iterator<Object> itr = example.iterator(); // mi restituisce l'iteratore all'oggetto voluto
 			
-			i = 0;
-			while (i < getNumberOfExplanatoryAttributes())
+			return itr;
+		}
+		
+		public int compareTo(Example ex)
+		{ 	
+			Iterator<Object> itr1 = example.iterator(); 
+			Iterator<Object> itr2 = ex.example.iterator();
+			
+			Object comp1, comp2;
+			while (itr1.hasNext())
 			{
-				if (!(this.get(i).equals(ex.get(i))))
+				comp1 = itr1.next();
+				comp2 = itr2.next();
+				if (!(comp1.equals(comp2)))
 				{
-					return ((String)this.get(i)).compareTo((String)ex.get(i));
+					return ((Comparable)comp1).compareTo((Comparable)comp2);
 				}
 				
-				i++;
 			}
 			
 			return 0;
@@ -72,32 +75,28 @@ public class Data {
 		outLookValues.add("overcast");
 		outLookValues.add("rain");
 		outLookValues.add("sunny");
-		explanatorySet.add(new DiscreteAttribute("Outlook", 0, outLookValues));
-		
-		TreeSet<String> temperatureValues = new TreeSet<String>();
-		temperatureValues.add("hot");
-		temperatureValues.add("mild");
-		temperatureValues.add("cool");
-		explanatorySet.add(new DiscreteAttribute("Temperature", 1, temperatureValues));
 		
 		TreeSet<String> humidityValues = new TreeSet<String>();
 		humidityValues.add("high");
 		humidityValues.add("normal");
-		explanatorySet.add(new DiscreteAttribute("Humidity", 2, humidityValues));
 		
 		TreeSet<String> windValues = new TreeSet<String>();
 		windValues.add("weak");
 		windValues.add("strong");
-		explanatorySet.add(new DiscreteAttribute("Wind", 3, windValues));
 		
 		TreeSet<String> playTennisValues = new TreeSet<String>();
 		playTennisValues.add("no");
 		playTennisValues.add("yes");
+		
+		explanatorySet.add(new DiscreteAttribute("Outlook", 0, outLookValues));
+		explanatorySet.add(new ContinuousAttribute("Temperature", 1, 3.2, 38.7));
+		explanatorySet.add(new DiscreteAttribute("Humidity", 2, humidityValues));
+		explanatorySet.add(new DiscreteAttribute("Wind", 3, windValues));
 		explanatorySet.add(new DiscreteAttribute("Playtennis", 4, playTennisValues));
 		
 		Example ex0 = new Example();
 		ex0.add(new String("sunny"));
-		ex0.add(new String("hot"));
+		ex0.add(new Double(37.5));
 		ex0.add(new String("high"));
 		ex0.add(new String("weak"));
 		ex0.add(new String("no"));
@@ -105,7 +104,7 @@ public class Data {
 		
 		Example ex1 = new Example();
 		ex1.add(new String("sunny"));
-		ex1.add(new String("hot"));
+		ex1.add(new Double(38.7));
 		ex1.add(new String("high"));
 		ex1.add(new String("strong"));
 		ex1.add(new String("no"));
@@ -113,7 +112,7 @@ public class Data {
 		
 		Example ex2 = new Example();
 		ex2.add(new String("overcast"));
-		ex2.add(new String("hot"));
+		ex2.add(new Double(37.5));
 		ex2.add(new String("high"));
 		ex2.add(new String("weak"));
 		ex2.add(new String("yes"));
@@ -121,7 +120,7 @@ public class Data {
 		
 		Example ex3 = new Example();
 		ex3.add(new String("rain"));
-		ex3.add(new String("mild"));
+		ex3.add(new Double(20.5));
 		ex3.add(new String("high"));
 		ex3.add(new String("weak"));
 		ex3.add(new String("yes"));
@@ -129,7 +128,7 @@ public class Data {
 		
 		Example ex4 = new Example();
 		ex4.add(new String("rain"));
-		ex4.add(new String("cool"));
+		ex4.add(new Double(20.7));
 		ex4.add(new String("normal"));
 		ex4.add(new String("weak"));
 		ex4.add(new String("yes"));
@@ -137,7 +136,7 @@ public class Data {
 		
 		Example ex5 = new Example();
 		ex5.add(new String("rain"));
-		ex5.add(new String("cool"));
+		ex5.add(new Double(21.2));
 		ex5.add(new String("normal"));
 		ex5.add(new String("strong"));
 		ex5.add(new String("no"));
@@ -145,7 +144,7 @@ public class Data {
 		
 		Example ex6 = new Example();
 		ex6.add(new String("overcast"));
-		ex6.add(new String("cool"));
+		ex6.add(new Double(20.5));
 		ex6.add(new String("normal"));
 		ex6.add(new String("strong"));
 		ex6.add(new String("yes"));
@@ -153,7 +152,7 @@ public class Data {
 		
 		Example ex7 = new Example();
 		ex7.add(new String("sunny"));
-		ex7.add(new String("mild"));
+		ex7.add(new Double(21.2));
 		ex7.add(new String("high"));
 		ex7.add(new String("weak"));
 		ex7.add(new String("no"));
@@ -161,7 +160,7 @@ public class Data {
 
 		Example ex8 = new Example();
 		ex8.add(new String("sunny"));
-		ex8.add(new String("cool"));
+		ex8.add(new Double(21.2));
 		ex8.add(new String("normal"));
 		ex8.add(new String("weak"));
 		ex8.add(new String("yes"));
@@ -169,7 +168,7 @@ public class Data {
 		
 		Example ex9 = new Example();
 		ex9.add(new String("rain"));
-		ex9.add(new String("mild"));
+		ex9.add(new Double(19.8));
 		ex9.add(new String("normal"));
 		ex9.add(new String("weak"));
 		ex9.add(new String("yes"));
@@ -177,7 +176,7 @@ public class Data {
 		
 		Example ex10 = new Example();
 		ex10.add(new String("sunny"));
-		ex10.add(new String("mild"));
+		ex10.add(new Double(3.5));
 		ex10.add(new String("normal"));
 		ex10.add(new String("strong"));
 		ex10.add(new String("yes"));
@@ -185,7 +184,7 @@ public class Data {
 		
 		Example ex11 = new Example();
 		ex11.add(new String("overcast"));
-		ex11.add(new String("mild"));
+		ex11.add(new Double(3.6));
 		ex11.add(new String("high"));
 		ex11.add(new String("strong"));
 		ex11.add(new String("yes"));
@@ -193,7 +192,7 @@ public class Data {
 		
 		Example ex12 = new Example();
 		ex12.add(new String("overcast"));
-		ex12.add(new String("hot"));
+		ex12.add(new Double(3.5));
 		ex12.add(new String("normal"));
 		ex12.add(new String("weak"));
 		ex12.add(new String("yes"));
@@ -201,7 +200,7 @@ public class Data {
 		
 		Example ex13 = new Example();
 		ex13.add(new String("rain"));
-		ex13.add(new String("mild"));
+		ex13.add(new Double(3.2));
 		ex13.add(new String("high"));
 		ex13.add(new String("strong"));
 		ex13.add(new String("no"));
@@ -240,19 +239,21 @@ public class Data {
 		
 	public String toString()
 	{
-		int i, j;
+		int i;
 		String tabella = new String (explanatorySet.get(0) + " " + explanatorySet.get(1) + " " + explanatorySet.get(2) + " " + explanatorySet.get(3) + " " + explanatorySet.get(4));
+		
 		i = 0;
-		while (i < getNumberOfExamples())
+		Iterator<Example> riga = data.iterator();
+		Example temp;
+		while (riga.hasNext())
 		{
-			j = 0;
+			temp = riga.next();
 			tabella = tabella + "\n" + i + ". ";
-			while (j < getNumberOfExplanatoryAttributes())
+			Iterator<Object> colonna = temp.iterator();
+			while (colonna.hasNext())
 			{
-				tabella = tabella + " " + getAttributeValue(i, j);
-				
-				j++;
-			}
+				tabella = tabella + " " + colonna.next();
+			}	
 			
 			i++;
 		}
@@ -261,25 +262,43 @@ public class Data {
 	}
 	
 	public Tuple getItemSet(int index) /* restituisce una tupla, vettore di Item, composto di 5 Item, quanto è 
-								 * explanatorySet, 
-								 */
+								        * explanatorySet, 
+								        */
 	{
 		Tuple tuple = new Tuple(explanatorySet.size());
-		for (int i = 0; i < explanatorySet.size(); i++)
+		
+		int i = 0;
+		
+		Iterator<Attribute> itr = explanatorySet.iterator();
+		Iterator<Object> colonna = data.get(index).iterator();
+		
+		Attribute temp;
+		while (itr.hasNext())
 		{
-			tuple.add(new DiscreteItem((DiscreteAttribute)explanatorySet.get(i), (String)data.get(index).get(i)), i);
+			temp = itr.next();
+			if (temp instanceof ContinuousAttribute) 
+			{
+				tuple.add(new ContinuousItem((ContinuousAttribute)temp, (double)colonna.next()), i);
+				
+			}
+			else 
+			{	
+				tuple.add(new DiscreteItem((DiscreteAttribute)temp, (String)colonna.next()), i);	
+			}
+			
+			i++;
 		}
 		
 		return tuple;
 	}
 
-	public int[] sampling(int k)throws OutOfRangeSampleSize
+	public int[] sampling(int k) throws OutOfRangeSampleSize // non modificato perché dato da lei
 	{
 		if (k <= 0 || k > getNumberOfExamples()) 
 		{
 			throw new OutOfRangeSampleSize("\nNumero di cluser non valido\n");
 		}
-		int centroidIndexes[] = new int[k];
+		int centroidIndexes[] = new int[k]; 
 		//choose k random different centroids in data.
 		Random rand = new Random();
 		rand.setSeed(System.currentTimeMillis());
@@ -292,9 +311,9 @@ public class Data {
 				found = false;
 				c = rand.nextInt(getNumberOfExamples());
 				// verify that centroid[c] is not equal to a centroide already stored in CentroidIndexes
-				for (int j=0; j < i; j++)
+				for (int j = 0; j < i; j++)
 				{
-					if (compare(centroidIndexes[j],c))
+					if (compare(centroidIndexes[j], c))
 					{
 						found = true;
 						break;
@@ -310,17 +329,16 @@ public class Data {
 	}
 
 	private boolean compare(int i, int j)
-	{
-		int k = 0;
+	{	
+		Iterator<Object> colonna1 = data.get(i).iterator();
+		Iterator<Object> colonna2 = data.get(j).iterator();
 		
-		while(k < getNumberOfExplanatoryAttributes())
+		while(colonna1.hasNext())
 		{
-			if (getAttributeValue(i, k).equals(getAttributeValue(j, k)) == false)
+			if (!(colonna1.next().equals(colonna2.next())))
 			{
 				return false;
 			}
-			
-			k++;
 		}
 		
 		return true;
@@ -330,25 +348,23 @@ public class Data {
 																		   * più presente di un DiscreteAttribute
 																		   */
 	{
-		int j;
+		int max;
 		int i; // contatore per scandire di quante posizioni l'iteratore dovrà andare avanti nel TreeSet di attribute
 		String word;
 
-		int[] a = new int[attribute.getNumberOfDistinctValues()];
+		List<Integer> temp = new ArrayList<Integer>(attribute.getNumberOfDistinctValues());
 		
-		j = 0;
 		Iterator<String> itr = attribute.iterator();
-		while (j < a.length)
+		while (itr.hasNext())
 		{
 			word = itr.next(); // da modificare perché adesso attribute è un TreeSet
-			a[j] = attribute.frequency(this, idList, word);
-			j++;
+			temp.add(attribute.frequency(this, idList, word));
 		}
-		j = max(a);
+		max = max(temp);
 		
 		itr = attribute.iterator(); // per far ricominciare l'iteratore dall'inizio del TreeSet, fino a j
 		i = 0;
-		while (i < j) // ciclo per far andare avanti l'iteratore del TreeSet di j volte, perché j è l'indice del vettore					
+		while (i < max) // ciclo per far andare avanti l'iteratore del TreeSet di j volte, perché j è l'indice del vettore					
 		{
 			itr.next();
 			i++;
@@ -357,29 +373,55 @@ public class Data {
 		return itr.next();
 	}
 
-	private int max(int vettore[]) // calcolo del massimo per un vettore, contiene le occorrenze di tutte le stringhe
+	private int max(List<Integer> list) // calcolo del massimo per un vettore, contiene le occorrenze di tutte le stringhe
 	{
 		int i, j, max, best; // j serve per ritornare l'indice del best
 		i = best = j = 0;
 		
-		while (i < vettore.length)
+		Iterator<Integer> itr = list.iterator();
+		while (itr.hasNext())
 		{
-			max = vettore[i];
+			max = itr.next();
 			if (best < max)
 			{
 				best = max;
 				j = i;
 			}
-		
+			
 			i++;
 		}
 		
 		return j;
 	}
 
+	Double computePrototype(HashSet<Integer> idList, ContinuousAttribute attribute)
+    {
+		double somma = 0;
+		int colonna = attribute.getIndex();
+		
+		Iterator<Integer> riga = idList.iterator();
+		while (riga.hasNext())
+		{
+			somma = somma + (double)getAttributeValue(riga.next(),colonna);
+		}
+		
+		Double result = somma / idList.size();
+		
+		return  result;
+	}
+	
 	Object computePrototype(HashSet<Integer> idList, Attribute attribute)
 	{
-		return computePrototype(idList, (DiscreteAttribute)attribute);
+		if (attribute instanceof ContinuousAttribute) 
+		{
+			return computePrototype(idList, (ContinuousAttribute)attribute);
+			
+		}
+		else 
+		{	
+			return computePrototype(idList, (DiscreteAttribute)attribute);	
+		}
+	
 	}
 	
 }

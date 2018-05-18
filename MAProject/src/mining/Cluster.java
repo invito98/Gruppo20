@@ -67,6 +67,7 @@ public class Cluster {
 			if (itr.next() == id)
 			{
 				clusteredData.remove((Integer)id);
+				
 				return;
 			}
 		}
@@ -89,7 +90,7 @@ public class Cluster {
 	{
 		String str = "Centroid = (";
 		
-		for(int i = 0; i < centroid.getLength(); i++)
+		for (int i = 0; i < centroid.getLength(); i++)
 			str += centroid.get(i) + " ";
 		str += ")\nExamples:\n";
 		
@@ -104,7 +105,7 @@ public class Cluster {
 			}
 			str += "] dist = " + getCentroid().getDistance(data.getItemSet(riga)) + "\n";
 		}
-		str += "\n AvgDistance ="+ getCentroid().avgDistance(data, clusteredData) + "\n";
+		str += "\n AvgDistance = "+ getCentroid().avgDistance(data, clusteredData) + "\n";
 		
 		return str;
 	}

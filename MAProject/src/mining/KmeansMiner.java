@@ -18,7 +18,7 @@ public class KmeansMiner {
 		return C;
 	}
 	
-	public int kmeans(Data data) throws OutOfRangeSampleSize 
+	public int kmeans(Data data) throws OutOfRangeSampleSize
 	{
 		int numberOfIterations = 0;
 		//STEP 1

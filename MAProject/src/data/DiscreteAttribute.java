@@ -7,10 +7,10 @@ class DiscreteAttribute extends Attribute implements Iterable<String> {
 	
 	private TreeSet<String> values;
 	
-	DiscreteAttribute(String name, int index, TreeSet<String> values)
+	DiscreteAttribute(String name, int index, TreeSet<String> valori)
 	{
 		super (name, index); // invoca il costruttore della classe madre
-		this.values = values;
+		values = valori;
 	}
 	
 	public Iterator<String> iterator()
@@ -49,23 +49,27 @@ class DiscreteAttribute extends Attribute implements Iterable<String> {
 												  * trovando prima v a che discreteAttribute appartiene
 												  */
 	{
-		int i, j, index;
+		int i, index;
 		
 		i = 0;
-		while(i < data.getNumberOfExplanatoryAttributes())
+		Iterator<Attribute> colonna = data.getAttributeSchema().iterator();
+		while (colonna.hasNext())
 		{
-			DiscreteAttribute a = (DiscreteAttribute)data.getAttribute(i); // cast di a ad DiscreteAttribute																		
-			j = 0;
-			Iterator<String> itr = a.iterator();
-			while (j < a.getNumberOfDistinctValues())
+			Attribute temp = colonna.next();
+			if (temp instanceof DiscreteAttribute) 
 			{
-				if (v == itr.next())
+				DiscreteAttribute temp1 = (DiscreteAttribute)temp;
+				Iterator<String> itr = temp1.iterator();
+				while (itr.hasNext())
 				{
-					index = i;
-					return index;
+					if (v.equals(itr.next()))
+					{
+						index = i;
+						return index;
+					}
+								
 				}
 				
-				j++;
 			}
 			
 			i++;

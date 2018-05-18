@@ -1,3 +1,4 @@
+
 package data;
 
 import java.util.*;
@@ -25,7 +26,14 @@ public abstract class Item {
 
 	public String toString()
 	{
-		return (String)value; // cast a string
+		if (value instanceof Double)
+		{
+			return value.toString();
+		} 
+		else 
+		{
+			return (String)value; // cast a string
+		}	
 	}
 
 	abstract double distance(Object a); // da implementare per ogni Attribute

@@ -1,3 +1,4 @@
+
 package data;
 
 class DiscreteItem extends Item {
@@ -9,7 +10,7 @@ class DiscreteItem extends Item {
 
 	double distance(Object a) // per stabilire la distanza di un valore dall'altro
 	{
-		if (this.getValue().equals(a))
+		if (getValue().equals(a))
 		{
 			return 0;
 		}
