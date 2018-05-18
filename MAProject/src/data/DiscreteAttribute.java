@@ -29,7 +29,7 @@ class DiscreteAttribute extends Attribute implements Iterable<String> {
 	{
 		int frequency, index;
 		
-		index = findColumn(data, v); /* trova la colonna in cui si troverà nella matrice data la stringa v
+		index = findColumn(data, v); /* trova la colonna in cui si troverï¿½ nella matrice data la stringa v
 		                              * servendosi di DiscreteAttribute
 		                              */
 		frequency = 0;

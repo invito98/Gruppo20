@@ -1,7 +1,8 @@
 
 package data;
+import java.io.*;
 
-abstract class Attribute {
+abstract class Attribute implements Serializable{
 	
 	private String name; // nome simbolico attributo
 	private int index; // identificativo attributo

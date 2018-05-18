@@ -1,11 +1,12 @@
 
 package mining;
 
+import java.io.*;
 import data.Data;
 import data.OutOfRangeSampleSize;
 import data.Tuple;
 
-public class ClusterSet {
+public class ClusterSet implements Serializable{
 	
 	private Cluster C[]; // vettore di cluster inizialmente vuoti
 	private int i = 0; // numero di Cluster in ClusterSet

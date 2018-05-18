@@ -2,8 +2,9 @@
 package data;
 
 import java.util.*;
+import java.io.*;
 
-public abstract class Item {
+public abstract class Item implements Serializable{
 	
 	private Attribute attribute; // Classe Attribute da ereditare
 	private Object value; // oggetto valore

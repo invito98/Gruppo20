@@ -1,12 +1,29 @@
 
 package mining;
 
+import java.io.*;
 import data.Data;
 import data.OutOfRangeSampleSize;
 
-public class KmeansMiner {
+public class KmeansMiner implements Serializable{
 
 	private ClusterSet C;
+	
+	public KmeansMiner(String fileName) throws FileNotFoundException, IOException, ClassNotFoundException
+	{
+		FileInputStream inFile = new FileInputStream(fileName);
+		ObjectInputStream inStream = new ObjectInputStream(inFile);
+		C = (ClusterSet) inStream.readObject();
+		inStream.close();
+	}
+	
+	public void salva(String fileName) throws FileNotFoundException, IOException
+	{
+		FileOutputStream outFile = new FileOutputStream(fileName);
+		ObjectOutputStream outStream = new ObjectOutputStream(outFile);
+		outStream.writeObject(C);
+		outStream.close();
+	}
 	
 	public KmeansMiner(int k)
 	{

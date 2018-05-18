@@ -1,9 +1,10 @@
 
 package data;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Tuple {
+public class Tuple implements Serializable{
 	
 	private Item[] tuple;
 

@@ -2,9 +2,10 @@
 package mining;
 
 import java.util.*;
+import java.io.*;
 import data.*;
 
-public class Cluster {
+public class Cluster implements Serializable{
 	
 	private Tuple centroid; // vettore di item, contenenti un Attribute e un oggetto
 	private HashSet<Integer> clusteredData; // vettore inizialmente di booleani
