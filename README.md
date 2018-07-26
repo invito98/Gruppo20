@@ -1,9 +1,21 @@
-# Gruppo20
+## Gruppo20
 
-Step 1:- Open Eclipse.
-Step 2:- Create a new Empty Java Project into the Workspace.
-Step 3:- Select General and then Project.
-Step 4:- Write the project Name.
-Step 5:- ora clicca sul  source folder and scegli import and poi general and file system.
-Step 6:- Choose la cartella dove hai pullato tutto da git (gruppo20).
+> guida aggiornata di come clonare un repository e sincronizzarlo con **Eclipse**
 
+---
+
+Step 1 : Create *GitHub* account and SignIn
+
+Step 2 : Start a Project = Create a repository
+
+Step 3 : Start ***Eclipse***
+
+Step 4 : Goto Perspective - Git Repositories and click on Add Git Repo
+
+Step 5 : Create a project in Eclipse
+
+Step 6 : Do a right click on Project - Team - Share - Add to git repo
+
+Step 7 : Commit and Push the project to the repo
+
+---
